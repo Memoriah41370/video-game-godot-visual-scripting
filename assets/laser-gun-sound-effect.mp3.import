@@ -1,0 +1,15 @@
+[remap]
+
+importer="mp3"
+type="AudioStreamMP3"
+path="res://.import/laser-gun-sound-effect.mp3-1d21576ceb201191ea7c51835fd67141.mp3str"
+
+[deps]
+
+source_file="res://assets/laser-gun-sound-effect.mp3"
+dest_files=[ "res://.import/laser-gun-sound-effect.mp3-1d21576ceb201191ea7c51835fd67141.mp3str" ]
+
+[params]
+
+loop=true
+loop_offset=0
