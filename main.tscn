@@ -1,0 +1,139 @@
+[gd_scene load_steps=32 format=2]
+
+[ext_resource path="res://assets/ENNEMI1.png" type="Texture" id=1]
+[ext_resource path="res://assets/alliéD.png" type="Texture" id=2]
+[ext_resource path="res://assets/alliéG.png" type="Texture" id=3]
+[ext_resource path="res://assets/vaisseau.vs" type="Script" id=4]
+[ext_resource path="res://assets/ENNEMI2.png" type="Texture" id=5]
+[ext_resource path="res://assets/alien.vs" type="Script" id=6]
+[ext_resource path="res://assets/allié8.png" type="Texture" id=7]
+[ext_resource path="res://assets/allié7.png" type="Texture" id=8]
+[ext_resource path="res://assets/allié9.png" type="Texture" id=9]
+[ext_resource path="res://assets/allié2.png" type="Texture" id=10]
+[ext_resource path="res://assets/allié4.png" type="Texture" id=11]
+[ext_resource path="res://assets/allié1.png" type="Texture" id=12]
+[ext_resource path="res://assets/allié5.png" type="Texture" id=13]
+[ext_resource path="res://assets/allié6.png" type="Texture" id=14]
+[ext_resource path="res://assets/allié3.png" type="Texture" id=15]
+[ext_resource path="res://assets/ENNEMI3.png" type="Texture" id=16]
+[ext_resource path="res://assets/ENNEMI5.png" type="Texture" id=17]
+[ext_resource path="res://assets/ENNEMI4.png" type="Texture" id=18]
+[ext_resource path="res://assets/backg.png" type="Texture" id=19]
+[ext_resource path="res://Backgroundsound.wav" type="AudioStream" id=20]
+[ext_resource path="res://assets/ENNEMIde2.png" type="Texture" id=21]
+[ext_resource path="res://assets/ENNEMIde3.png" type="Texture" id=22]
+[ext_resource path="res://assets/ENNEMIde5.png" type="Texture" id=23]
+[ext_resource path="res://assets/ENNEMIde4.png" type="Texture" id=24]
+[ext_resource path="res://assets/ENNEMIde.png" type="Texture" id=25]
+[ext_resource path="res://assets/laser-gun-sound-effect.mp3" type="AudioStream" id=26]
+
+[sub_resource type="SpriteFrames" id=1]
+animations = [ {
+"frames": [ ExtResource( 3 ) ],
+"loop": true,
+"name": "gauche",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 2 ) ],
+"loop": true,
+"name": "Droite",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 12 ), ExtResource( 10 ), ExtResource( 15 ), ExtResource( 11 ), ExtResource( 13 ), ExtResource( 14 ), ExtResource( 8 ), ExtResource( 7 ), ExtResource( 9 ) ],
+"loop": true,
+"name": "droit",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=2]
+extents = Vector2( 15.9133, 21.0001 )
+
+[sub_resource type="RectangleShape2D" id=3]
+
+[sub_resource type="SpriteFrames" id=4]
+animations = [ {
+"frames": [ ExtResource( 1 ), ExtResource( 5 ), ExtResource( 16 ), ExtResource( 18 ), ExtResource( 17 ) ],
+"loop": true,
+"name": "default",
+"speed": 5.0
+}, {
+"frames": [ ExtResource( 1 ), ExtResource( 25 ), ExtResource( 21 ), ExtResource( 22 ), ExtResource( 24 ), ExtResource( 23 ) ],
+"loop": true,
+"name": "détruie",
+"speed": 5.0
+} ]
+
+[sub_resource type="RectangleShape2D" id=5]
+extents = Vector2( 10, 557.031 )
+
+[node name="main" type="Node2D"]
+script = ExtResource( 4 )
+
+[node name="backg" type="Sprite" parent="."]
+position = Vector2( 517.051, 302.367 )
+scale = Vector2( 1.0339, 1.01878 )
+texture = ExtResource( 19 )
+
+[node name="vaisseau" type="KinematicBody2D" parent="."]
+position = Vector2( 490, 560 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="vaisseau"]
+frames = SubResource( 1 )
+animation = "droit"
+frame = 5
+playing = true
+
+[node name="Area2D" type="Area2D" parent="vaisseau"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="vaisseau/Area2D"]
+shape = SubResource( 2 )
+
+[node name="alien" type="KinematicBody2D" parent="."]
+position = Vector2( 42, 27 )
+script = ExtResource( 6 )
+
+[node name="Area2D" type="Area2D" parent="alien"]
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="alien/Area2D"]
+shape = SubResource( 3 )
+
+[node name="AnimatedSprite" type="AnimatedSprite" parent="alien"]
+frames = SubResource( 4 )
+frame = 3
+playing = true
+
+[node name="bgsound" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 20 )
+
+[node name="lasergun" type="AudioStreamPlayer" parent="."]
+stream = ExtResource( 26 )
+
+[node name="Area2Dg" type="Area2D" parent="."]
+position = Vector2( 9.17782, 29.2302 )
+
+[node name="CollisionShape2D" type="CollisionShape2D" parent="Area2Dg"]
+shape = SubResource( 5 )
+
+[node name="Area2Dd" type="Area2D" parent="."]
+position = Vector2( 1011.22, 26.1938 )
+
+[node name="CollisionShape2D2" type="CollisionShape2D" parent="Area2Dd"]
+shape = SubResource( 5 )
+
+[node name="Label" type="Label" parent="."]
+visible = false
+margin_left = 448.639
+margin_top = 242.998
+margin_right = 742.639
+margin_bottom = 311.998
+text = "C'est Gagné !"
+__meta__ = {
+"_edit_use_anchors_": false
+}
+
+[connection signal="ready" from="." to="." method="_on_main_ready"]
+[connection signal="area_entered" from="vaisseau/Area2D" to="." method="_on_Area2D_area_entered"]
+[connection signal="area_entered" from="alien/Area2D" to="vaisseau" method="_on_Area2D_area_entered"]
+[connection signal="body_entered" from="alien/Area2D" to="alien" method="_on_Area2D_body_entered"]
+[connection signal="area_entered" from="Area2Dg" to="alien" method="_on_Area2Dg_area_entered"]
+[connection signal="area_entered" from="Area2Dd" to="alien" method="_on_Area2Dd_area_entered"]
